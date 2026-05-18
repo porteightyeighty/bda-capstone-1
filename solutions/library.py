@@ -6,11 +6,23 @@ def download_video(url):
     Path("videos").mkdir(exist_ok=True)
 
     ydl_options = {
-    "outtmpl": "videos/%(title)s.%(ext)s"
+    "outtmpl": "videos/%(title)s.%(ext)s",
+    "socket_timeout": 30
     }
-
-    with yt_dlp.YoutubeDL(ydl_options) as ydl:
-        ydl.download([url])
+    try:
+        with yt_dlp.YoutubeDL(ydl_options) as ydl:
+            ydl.download([url])
+        return {
+                "url": url,
+                "status": "success",
+                "error": ""
+                }
+    except Exception as error:
+        return {
+                "url": url,
+                "status": "failed",
+                "error": str(error)
+                }
 
 def read_video_urls(csv_path):
     url_list = []
