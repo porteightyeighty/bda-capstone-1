@@ -1,5 +1,6 @@
 from pathlib import Path
 import yt_dlp
+import csv
 
 def download_video(url):
     Path("videos").mkdir(exist_ok=True)
@@ -10,3 +11,10 @@ def download_video(url):
 
     with yt_dlp.YoutubeDL(ydl_options) as ydl:
         ydl.download([url])
+
+def read_video_urls(csv_path):
+    with open(csv_path, newline="") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            print(row["title"], row["url"])
