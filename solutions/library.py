@@ -13,8 +13,9 @@ def download_video(url):
         ydl.download([url])
 
 def read_video_urls(csv_path):
+    url_list = []
     with open(csv_path, newline="") as file:
         reader = csv.DictReader(file)
-
         for row in reader:
-            print(row["title"], row["url"])
+            url_list.append(row["url"]) 
+    return url_list
